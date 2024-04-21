@@ -5,58 +5,104 @@
 {{ super() }}
 
 {% block content %}
-<div class="content">
-  <div class="row">
-    <div class="col s12 m8">
-      <div class="workouts">
-        <h2 style="text-align: center;">{{routine.name}}</h2>
-        <h3>Workouts in {{routine.name}}:</h3> 
-        {% if workouts %}
+<style>
+  .workouts-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Adjust alignment as needed */
+  }
+  .card  {
+    width: 25%; /* Adjust the width as needed */
+    height: auto;
+    margin-right: 10px; /* Adjust the margin as needed */  
+  }
+  
+  .workouts-container {
+    flex: 1; /* Take up remaining space */
+    margin-right: 20px; /* Adjust spacing between columns */
+  }
+
+  .edit-section {
+    flex: 0 0 30%; 
+  }
+
+  .button {
+    background-color: #000000;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+  input[type=text] {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 2px;
+    box-sizing: border-box;
+  }
+  /* Media query for responsiveness */
+  @media screen and (max-width: 768px) {
+    .workouts-section {
+      flex-direction: column; /* Stack columns on small screens */
+    }
+
+    .edit-section {
+      flex-basis: auto; /* Allow edit section to grow */
+      margin-top: 50px; /* Add space between columns */
+    }
+  }
+
+</style>
+<div class="workouts-section">
+  <div class="workouts-container">
+    <h2 class="routine-title">{{routine.name}}</h2>
+    <h3 class="workouts-heading">Workouts in {{routine.name}}:</h3> 
+    {% if workouts %}
+    
+      <div class="card-container">
         {% for workout in workouts %}
-        <div class="card-container">
           <div class="card">
-            <div class="card-title">Workout: {{ workout.name }}</div>
-            <div class="card-text">Body part: {{ workout.bodypart }}</div>
-            <div class="card-text">Equipment: {{ workout.equipment }}</div>
+            <header class="card-title">Workout: {{ workout.name }}</header>
+            <p class="card-text">Body part: {{ workout.bodypart }}</p>
+            <p class="card-text">Equipment: {{ workout.equipment }}</p>
             <br>
-            <div class="card-text">Instruction1: {{ workout.instruction0 }}</div>
-            <div class="card-text">Instruction2: {{ workout.instruction1 }}</div>
+            <p class="card-text">Instruction1: {{ workout.instruction0 }}</p>
+            <p class="card-text">Instruction2: {{ workout.instruction1 }}</p>
             <div class="card-action">
               <form action="/deleteworkout/{{routine.id}}/{{workout.id}}" method="POST">
-                <button type="submit" class="btn">Delete from Routine</button>
+                <button type="submit" class="button">Delete from Routine</button>
               </form>
             </div>
           </div>
-        </div>
         {% endfor %}
-        {% else %}
-        <p style="text-align: center;">No Workouts found!</p>
-        {% endif %}
       </div>
-    </div>
+    {% else %}
+      <p class="no-workouts-text">No Workouts found!</p>
+    {% endif %}
+  </div>
 
-    <div class="col s12 m4">
-      <div class="routines">
-        <h3>Edit {{routine.name}}</h3>
-        <div class="collection" style="background-color:gainsboro;padding: 5px;">
-          <div>
-            Rename Routine:
-            <form style="display: flex;flex-direction:row; " action="/rename_routine/{{routine.id}}" method="POST">
-              <input type="text" name="name" id="name" placeholder="Enter New Name" style="background-color:white;border-radius:15px;margin-right:5px;">
-              <input type="submit" class="btn" value="Rename">
-            </form>
-          </div>
-          <div>
-            Delete Routine:
-            <a href="/delete_routine/{{ routine.id }}" class="btn" onclick="event.preventDefault(); document.getElementById('delete-form-{{ routine.id }}').submit();">Delete Routine</a>
-            <form id="delete-form-{{ routine.id }}" action="/delete_routine/{{ routine.id }}" method="POST" style="display: none;">
-              <input type="hidden" name="_method" value="DELETE">
-              <input type="hidden" name="_token" value="{{ csrf_token }}">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="edit-section">
+    <h3 class="card-title"">Edit {{routine.name}}</h3>
+    <ul class="edit-collection">
+      <h3 class="card-text" style="font-size:24px;">
+        Rename Routine:
+      </h3>
+        <form class="rename-form" action="/rename_routine/{{routine.id}}" method="POST">
+          <input type="text" name="name" id="name" placeholder="Enter New Name" class="rename-input">
+          <input type="submit" class="button" value="Rename">
+        </form>
+      </li>
+     
+
+        <a href="/delete_routine/{{ routine.id }}" class="button" onclick="event.preventDefault(); document.getElementById('delete-form-{{ routine.id }}').submit();">Delete Routine</a>
+        <form id="delete-form-{{ routine.id }}" action="/delete_routine/{{ routine.id }}" method="POST" class="delete-form">
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="hidden" name="_token" value="{{ csrf_token }}">
+        </form>
+      </li>
+    </ul>
   </div>
 </div>
 {% endblock %}
