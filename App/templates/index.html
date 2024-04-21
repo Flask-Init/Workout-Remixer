@@ -86,19 +86,20 @@
         {% for workout in workouts %}
           <div class="card">
             
-            <button data-open-modal-workout><i class="gg-add-r"></i></button>
+            <button data-open-modal-workout style="border-style: none; border-radius: 0; box-shadow: none; background-color: transparent;"><i class="gg-add-r"></i></button>
             <dialog data-modal-workout class="modal">
               <h2>Add Workout</h2>
               <div class="pop-up">
                 <form action="/addRoutine" method="POST">
-                  <div>Select Routine</div>
+                  <h3>Select Routine</h3>
                   <select name="routine_id">
                     {% for routine in routines %}
                     <option value="{{ routine.id }}">{{ routine.name }}</option>
                     {% endfor %}
                   </select>
+                  <br>
                   <input type="hidden" name="workout_id" value="{{ workout.id }}">
-                  <button type="submit" class="btn">Add To Routine</button>
+                  <input type="submit" value="Add to Routine"/>
                 </form>
               </div>
               <button data-close-modal-workout>Cancel</button>

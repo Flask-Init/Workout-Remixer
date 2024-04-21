@@ -429,8 +429,8 @@ creds-label {
 
 /* pop-up stuff */
 .modal {
-  height: 200px;
-  width: 300px;
+  height: 300px;
+  width: 400px;
   background-color: #900C3F;
 }
 
@@ -444,7 +444,7 @@ creds-label {
 }
 
 .pop-up input[type="submit"]{
-  width: 60px;
+  width: fit-content;
   height: 40px;
   color: white;
   background-color: black;
@@ -454,4 +454,29 @@ creds-label {
 
 .pop-up input[type="submit"]:hover{
   background-color: #F8DE22;
+}
+
+.card select {
+  width: 100%;
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.card select option {
+  font-size: 14px;
+  padding: 5px;
+}
+
+.card select option:hover {
+  background-color: #f0f0f0;
+}
+
+.modal .select-dropdown.dropdown-trigger {
+  display: none;
+}
+
+svg.caret {
+  display: none;
 }
