@@ -185,6 +185,9 @@ views = [
 ```
 ## Test in fork before adding to main
 
+## Alternative way to open workspace in Gitpod
+Workspace can be opened in Gitpod by prefixing the repository link with the following: https://gitpod.io/#/
+
 ## Cannot Update Workflow file
 
 If you are running into errors in gitpod when updateding your github actions file, ensure your [github permissions](https://gitpod.io/integrations) in gitpod has workflow enabled ![perms](./images/gitperms.png)
